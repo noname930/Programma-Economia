@@ -480,7 +480,10 @@ public class mainFrame extends javax.swing.JFrame {
             
             
             for(int i = 0 ; i<5 ; i++)
-            {
+            {   
+                           //estraggo tramite le chiave Settore(i)[0] il valore dell'array di double in posizione 0, e lo
+                           // moltiplico per il valore della valutazione, estratto mediante la chiave presente in combobox
+                           // che può essere "ALtissimo" , "Alto" ecc ecc
                 result[i]=((hmap_settori.get((("settore"+(i+1))))[0]) * (hmap_valutazioni.get((jComboBox2.getSelectedItem()).toString())))
                            + ((hmap_settori.get((("settore"+(i+1))))[1]) * (hmap_valutazioni.get((jComboBox1.getSelectedItem()).toString())))
                            + ((hmap_settori.get((("settore"+(i+1))))[2]) * (hmap_valutazioni.get((jComboBox3.getSelectedItem()).toString())))
