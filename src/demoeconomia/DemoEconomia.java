@@ -5,7 +5,6 @@
  */
 package demoeconomia;
 
-import java.util.HashMap;
 
 /**
  *
@@ -30,7 +29,8 @@ public class DemoEconomia {
         // TODO code application logic here
        
         mainFrame m=new mainFrame();
-        m.setVisible(true);
+        m.setVisible(true);   
+        
     }
 
     /**
