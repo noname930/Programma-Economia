@@ -31,11 +31,10 @@ public class DemoEconomia {
         mainFrame m=new mainFrame();
         m.setVisible(true);   
         
+        mainFrame2 m2=new mainFrame2();
+        m2.setVisible(true);  
+        
     }
-
-    /**
-     * @return the hmap_settori
-     */
    
     
 }
