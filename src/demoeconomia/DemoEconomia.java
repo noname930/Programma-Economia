@@ -9,6 +9,13 @@ package demoeconomia;
 /**
  *
  * @author alessio spina
+ * @description: Questo è il main del programma demoEconomia, dove sono salvate le varie stringhe
+ * da visualizzare in output, e i differenti tipi di pc per ogni settore di mercato.
+ * Il programma ha lo scopo di fornire 5 PC all'utente, aventi delle caratteristiche
+ * che si avvicinano ai suoi gusti personali.
+ * Per far ciò, si sintetizza l'entità di un PC con 5 attributi(Estetica,Peso,Prezzo,Comfort,Prestazioni) e
+ * mediante il modello aziendale AHP, si raccolgono i dati dell'utente, facendolo esprimere dei pareri di preferenza,
+ * confrontando ciascun attributo con l'altro.
  */
 public class DemoEconomia {
     
@@ -33,6 +40,9 @@ public class DemoEconomia {
         
         mainFrame2 m2=new mainFrame2();
         m2.setVisible(true);  
+        
+        
+        
         
     }
    
