@@ -30,7 +30,7 @@ public class confrontFrame extends javax.swing.JFrame {
     
        private Map<String,Double> hmap_valutazioni = new HashMap<String, Double>() {
         {
-           put("Altissima",9.00);
+           /*put("Altissima",9.00);
            put("Alta", 7.00);
            put("Media Alta", 5.00);
            put("Discretamente Alta", 3.00);
@@ -38,7 +38,19 @@ public class confrontFrame extends javax.swing.JFrame {
            put("Discretamente Bassa", 0.333);
            put("Media Bassa", 0.2);
            put("Bassa", 0.142);
-           put("Bassissima",0.111);
+           put("Bassissima",0.111);*/
+            
+           put("Altissima",9.0);
+           put("Alta", 8.0);
+           put("Media Alta", 7.0);
+           put("Discretamente Alta", 6.0);
+           put("Nella Media", 1.0);
+           put("Discretamente Bassa", 5.0);
+           put("Media Bassa", 4.0);
+           put("Bassa", 3.0);
+           put("Bassissima",2.0);
+            
+            
         }
     };
        
@@ -608,7 +620,19 @@ public class confrontFrame extends javax.swing.JFrame {
                      prezzo  1,0  1,1       1,2        1,3     1,4
                 prestazioni  2,0  2,1       2,2        2,3     2,4
                    estetica  3,0  3,1       3,2        3,3     3,4
-                    comfort  4,0  4,1       4,2        4,3     4,4       
+                    comfort  4,0  4,1       4,2        4,3     4,4     
+                    
+                    Demo Rapida :
+                                    Prest (x) - Estetica = altissima
+                                    Prest (x) - Comfort = bassa
+                                    Prezzo    - Prestazione(x) = altissima
+                                    Prezzo(x) - Estetica = bassissima
+                                    Prezzo    - Comfort(x) = bassa
+                                    Estetica  - Comfort(x) = media bassa
+                                    Peso      - Prezzo(x) = bassissima
+                                    Peso      - Prestazioni(x) = Alta
+                                    Peso(x)   - Estetica = nella media
+                                    Peso      - Comfort(x) =  media alta
 */
        
         double value1,value2,value3,value4;
@@ -616,7 +640,7 @@ public class confrontFrame extends javax.swing.JFrame {
         switch (indicatore) {
             case 1:   // vuol dire che confrontFrame mi è servito per confrontare Estetica - Comfort             
                 value1 = HashMap_getValue(jLabel14.getText());  //estraggo il valore dall'hashmap 
-                setValue_Matrix(jRadioButton11,3,0,value1);    // lo inserisco nella matrice
+                setValue_Matrix(jRadioButton11,3,4,value1);    // lo inserisco nella matrice
                 mainFrame2.jLabel6.setVisible(true);
                 mainFrame2.jLabel8.setVisible(true);
                 break;
@@ -624,7 +648,7 @@ public class confrontFrame extends javax.swing.JFrame {
                 value1 = HashMap_getValue(jLabel11.getText());
                 value2 = HashMap_getValue(jLabel14.getText());
                 setValue_Matrix(jRadioButton3,2,3,value1);
-                setValue_Matrix(jRadioButton11,2,3,value2);
+                setValue_Matrix(jRadioButton11,2,4,value2);
                 mainFrame2.jLabel2.setVisible(true);
                 mainFrame2.done_prestazioni=true;
                 break;
@@ -646,7 +670,7 @@ public class confrontFrame extends javax.swing.JFrame {
                 setValue_Matrix(jRadioButton3,0,1,value1);
                 setValue_Matrix(jRadioButton11,0,2,value2);
                 setValue_Matrix(jRadioButton13,0,3,value3);
-                setValue_Matrix(jRadioButton13,0,4,value4);
+                setValue_Matrix(jRadioButton15,0,4,value4);
                 mainFrame2.jLabel10.setVisible(true);
             
                 break;
