@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.swing.ButtonGroup;
 import Jama.*;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,25 +31,16 @@ public class confrontFrame extends javax.swing.JFrame {
     
        private Map<String,Double> hmap_valutazioni = new HashMap<String, Double>() {
         {
-           /*put("Altissima",9.00);
-           put("Alta", 7.00);
-           put("Media Alta", 5.00);
-           put("Discretamente Alta", 3.00);
-           put("Nella Media", 1.00);
-           put("Discretamente Bassa", 0.333);
-           put("Media Bassa", 0.2);
-           put("Bassa", 0.142);
-           put("Bassissima",0.111);*/
-            
-           put("Altissima",9.0);
-           put("Alta", 8.0);
-           put("Media Alta", 7.0);
-           put("Discretamente Alta", 6.0);
+
+           put("Altissimo",9.0);
+           put("Alto", 8.0);
+           put("Medio Alto", 7.0);
+           put("Discretamente Alto", 6.0);
            put("Nella Media", 1.0);
-           put("Discretamente Bassa", 5.0);
-           put("Media Bassa", 4.0);
-           put("Bassa", 3.0);
-           put("Bassissima",2.0);
+           put("Discretamente Basso", 5.0);
+           put("Medio Basso", 4.0);
+           put("Basso", 3.0);
+           put("Bassissimo",2.0);
             
             
         }
@@ -83,23 +75,23 @@ public class confrontFrame extends javax.swing.JFrame {
     public void jSliderChanger(javax.swing.JSlider e , javax.swing.JLabel l)
     {
        if(e.getValue() >= 0 && e.getValue() <=10)
-          l.setText("Bassissima");
+          l.setText("Bassissimo");
        else if(e.getValue() >= 11 && e.getValue() <= 20)
-           l.setText("Bassa");
+           l.setText("Basso");
        else if(e.getValue() >= 21 && e.getValue() <= 30)
-           l.setText("Media Bassa");
+           l.setText("Medio Basso");
        else if(e.getValue() >= 31 && e.getValue() <= 40)
-           l.setText("Discretamente Bassa");
+           l.setText("Discretamente Basso");
        else if(e.getValue() >= 41 && e.getValue() <= 50)
            l.setText("Nella Media");
        else if(e.getValue() >= 51 && e.getValue() <= 60)
-           l.setText("Discretamente Alta");
+           l.setText("Discretamente Alto");
        else if(e.getValue() > 61 && e.getValue() <= 70)
-           l.setText("Media Alta");
+           l.setText("Medio Alto");
        else if(e.getValue() > 71 && e.getValue() <= 80)
-           l.setText("Alta");
+           l.setText("Alto");
        else if(e.getValue() > 81 && e.getValue() <= 100)
-           l.setText("Altissima");
+           l.setText("Altissimo");
     }
     
     //a seconda del parametro n, il frame visualizzerà solo i Panel che servono
@@ -114,12 +106,12 @@ public class confrontFrame extends javax.swing.JFrame {
         
         if(n==1) {
             //Confronto Estetica - Comfort
-            jPanel3.setVisible(false);
+            jPanel7.setVisible(false);
             jPanel8.setVisible(false);
             jPanel9.setVisible(false);
-            
-            jRadioButton11.setText("Estetica");
-            jRadioButton12.setText("Comfort");
+                       
+            jRadioButton3.setText("Estetica");
+            jRadioButton4.setText("Comfort");
             jButton1.setLocation(315,250);
             this.setSize(634, 220);
         }
@@ -175,9 +167,29 @@ public class confrontFrame extends javax.swing.JFrame {
         return hmap_valutazioni.get(valutazione);
     }
     
+    public boolean checkAllBoxAreSelected(int n)
+    {
+      //  int[] indexRadioButton= new int[] {3,4,11,12,13,14,15,16};
+        
+        if(n==1 && (jRadioButton3.isSelected() || jRadioButton4.isSelected()))
+            return true;
+        else if(n==2 && (jRadioButton3.isSelected() || jRadioButton4.isSelected()) && 
+                        (jRadioButton11.isSelected() || jRadioButton12.isSelected()))
+            return true;
+        else if(n==3 && (jRadioButton3.isSelected() || jRadioButton4.isSelected()) && 
+                        (jRadioButton11.isSelected() || jRadioButton12.isSelected()) && 
+                        (jRadioButton13.isSelected() || jRadioButton14.isSelected()))
+            return true;
+        else if (n==4 && (jRadioButton3.isSelected() || jRadioButton4.isSelected()) && 
+                         (jRadioButton11.isSelected() || jRadioButton12.isSelected()) && 
+                         (jRadioButton13.isSelected() || jRadioButton14.isSelected()) && 
+                         (jRadioButton15.isSelected() || jRadioButton16.isSelected()))
+            return true;
+        
+        return false;
+    }
     
-    
-    
+     
     public void setValue_Matrix(javax.swing.JRadioButton button, int i , int j , double value)
     {
          if(button.isSelected()) {// vuol dire che ho preferito una caratteristica a discapito di un'altra
@@ -207,6 +219,7 @@ public class confrontFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jSlider2 = new javax.swing.JSlider();
         jLabel11 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jRadioButton11 = new javax.swing.JRadioButton();
@@ -214,6 +227,7 @@ public class confrontFrame extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jSlider6 = new javax.swing.JSlider();
         jLabel14 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jRadioButton13 = new javax.swing.JRadioButton();
@@ -221,6 +235,7 @@ public class confrontFrame extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jSlider7 = new javax.swing.JSlider();
         jLabel17 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jRadioButton15 = new javax.swing.JRadioButton();
@@ -228,6 +243,7 @@ public class confrontFrame extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jSlider8 = new javax.swing.JSlider();
         jLabel20 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
@@ -265,23 +281,35 @@ public class confrontFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setBackground(new java.awt.Color(10, 37, 56));
+        jLabel11.setForeground(new java.awt.Color(0, 51, 51));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Nella Media");
+
+        jLabel5.setBackground(new java.awt.Color(10, 37, 56));
+        jLabel5.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel5.setText("Grado di preferenza:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jRadioButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jRadioButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -300,7 +328,9 @@ public class confrontFrame extends javax.swing.JFrame {
                         .addComponent(jRadioButton4)
                         .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel11)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel5))
                 .addContainerGap())
         );
 
@@ -330,23 +360,35 @@ public class confrontFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel14.setBackground(new java.awt.Color(10, 37, 56));
+        jLabel14.setForeground(new java.awt.Color(0, 51, 51));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Nella Media");
+
+        jLabel6.setBackground(new java.awt.Color(10, 37, 56));
+        jLabel6.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel6.setText("Grado di preferenza:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jRadioButton11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jRadioButton11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -365,7 +407,9 @@ public class confrontFrame extends javax.swing.JFrame {
                         .addComponent(jRadioButton12)
                         .addComponent(jLabel13)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel14)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel6))
                 .addContainerGap())
         );
 
@@ -395,23 +439,35 @@ public class confrontFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel17.setBackground(new java.awt.Color(10, 37, 56));
+        jLabel17.setForeground(new java.awt.Color(0, 51, 51));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Nella Media");
+
+        jLabel7.setBackground(new java.awt.Color(10, 37, 56));
+        jLabel7.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel7.setText("Grado di preferenza:");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jRadioButton13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jRadioButton13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSlider7, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -428,7 +484,9 @@ public class confrontFrame extends javax.swing.JFrame {
                         .addComponent(jRadioButton14)
                         .addComponent(jLabel16)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel17)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel7))
                 .addContainerGap())
         );
 
@@ -458,23 +516,35 @@ public class confrontFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel20.setBackground(new java.awt.Color(10, 37, 56));
+        jLabel20.setForeground(new java.awt.Color(0, 51, 51));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Nella Media");
+
+        jLabel8.setBackground(new java.awt.Color(10, 37, 56));
+        jLabel8.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel8.setText("Grado di preferenza:");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jRadioButton15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jRadioButton15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSlider8, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -491,7 +561,9 @@ public class confrontFrame extends javax.swing.JFrame {
                         .addComponent(jRadioButton16)
                         .addComponent(jLabel19)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel20)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel8))
                 .addContainerGap())
         );
 
@@ -514,7 +586,7 @@ public class confrontFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -541,7 +613,7 @@ public class confrontFrame extends javax.swing.JFrame {
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -557,7 +629,7 @@ public class confrontFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -634,25 +706,48 @@ public class confrontFrame extends javax.swing.JFrame {
                                     Peso(x)   - Estetica = nella media
                                     Peso      - Comfort(x) =  media alta
 */
-       
-        double value1,value2,value3,value4;
+        
+       // if(checkAllBoxAreSelected())
  
+        double value1,value2,value3,value4;
+        boolean uscita=true;
+             
         switch (indicatore) {
-            case 1:   // vuol dire che confrontFrame mi è servito per confrontare Estetica - Comfort             
-                value1 = HashMap_getValue(jLabel14.getText());  //estraggo il valore dall'hashmap 
-                setValue_Matrix(jRadioButton11,3,4,value1);    // lo inserisco nella matrice
+            case 1:   // vuol dire che confrontFrame mi è servito per confrontare Estetica - Comfort  
+               if(checkAllBoxAreSelected(indicatore))
+               {
+                value1 = HashMap_getValue(jLabel11.getText());  //estraggo il valore dall'hashmap 
+                setValue_Matrix(jRadioButton3,3,4,value1);    // lo inserisco nella matrice
                 mainFrame2.jLabel6.setVisible(true);
                 mainFrame2.jLabel8.setVisible(true);
+                mainFrame2.done_estetica=true;
+                mainFrame2.done_comfort=true;
+               } 
+               else 
+               {
+                 JOptionPane.showMessageDialog(this,"Non tutti i box sono selezionati","Messaggio D'errore", JOptionPane.ERROR_MESSAGE);
+                 uscita=false;
+               }
                 break;
             case 2://confrontFrame mi è servito per confrontare [Prestazione - Estetica] e [Prestazione - Comfort]
+                if(checkAllBoxAreSelected(indicatore))
+               {
                 value1 = HashMap_getValue(jLabel11.getText());
                 value2 = HashMap_getValue(jLabel14.getText());
                 setValue_Matrix(jRadioButton3,2,3,value1);
                 setValue_Matrix(jRadioButton11,2,4,value2);
                 mainFrame2.jLabel2.setVisible(true);
                 mainFrame2.done_prestazioni=true;
+               }
+                else
+                {
+                 JOptionPane.showMessageDialog(this,"Non tutti i box sono selezionati","Messaggio D'errore", JOptionPane.ERROR_MESSAGE);
+                 uscita=false; 
+                }
                 break;
             case 3://confrontFrame mi è servito per confrontare [Prezzo - Prestazione] e [Prezzo - Estetica] e [Prezzo - Comfort]
+                if(checkAllBoxAreSelected(indicatore)) 
+                {
                 value1 = HashMap_getValue(jLabel11.getText());
                 value2 = HashMap_getValue(jLabel14.getText());
                 value3 = HashMap_getValue(jLabel17.getText());
@@ -660,9 +755,17 @@ public class confrontFrame extends javax.swing.JFrame {
                 setValue_Matrix(jRadioButton11,1,3,value2);
                 setValue_Matrix(jRadioButton13,1,4,value3); 
                 mainFrame2.jLabel4.setVisible(true);
-                
+                mainFrame2.done_prezzo=true;
+                }
+                else
+                {
+                 JOptionPane.showMessageDialog(this,"Non tutti i box sono selezionati","Messaggio D'errore", JOptionPane.ERROR_MESSAGE);
+                 uscita=false;
+                }
                 break;
             case 4: // confrontFrame : [Peso - Prezzo], [Peso-Prest], [Peso - Estetica] , [Peso - Comfort]
+                 if(checkAllBoxAreSelected(indicatore)) 
+                {
                 value1 = HashMap_getValue(jLabel11.getText());
                 value2 = HashMap_getValue(jLabel14.getText());
                 value3 = HashMap_getValue(jLabel17.getText());
@@ -672,13 +775,25 @@ public class confrontFrame extends javax.swing.JFrame {
                 setValue_Matrix(jRadioButton13,0,3,value3);
                 setValue_Matrix(jRadioButton15,0,4,value4);
                 mainFrame2.jLabel10.setVisible(true);
-            
+                mainFrame2.done_peso=true;
+                }
+                 else
+                 {
+                 JOptionPane.showMessageDialog(this,"Non tutti i box sono selezionati","Messaggio D'errore", JOptionPane.ERROR_MESSAGE);
+                 uscita=false;
+                 }
                 break;
             default:
                 break;
         }
-         mainFrame2.mat.print(5,5);
+          
+     
+    mainFrame2.mat.print(5,5);
+    
+    if(uscita)
         this.dispose();
+   
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -731,6 +846,10 @@ public class confrontFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;

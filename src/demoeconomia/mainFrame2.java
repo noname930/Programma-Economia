@@ -7,6 +7,8 @@ package demoeconomia;
 
 import java.util.HashMap;
 import Jama.*;
+import java.awt.Desktop;
+import java.net.URI;
 import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -25,7 +27,7 @@ public class mainFrame2 extends javax.swing.JFrame {
     
     private HashMap<String,double[]> hmap_settori = new HashMap<String, double[]>() {
         {
-                                         // peso,prezzo,prestazioni,estetica,comfort
+                                       // peso,prezzo,prestazioni,estetica,comfort
             put("settore1", new double[] {0.03,0.14,0.52,0.03,0.28});
             put("settore2", new double[] {0.08,0.27,0.47,0.04,0.14});
             put("settore3", new double[] {0.28,0.08,0.32,0.18,0.14});
@@ -36,20 +38,7 @@ public class mainFrame2 extends javax.swing.JFrame {
     
     protected static Matrix mat = new Matrix(5,5);
     
-        //private double[] valutazioni = {9.00,7.00,5.00,3.00,1,0.333,0.2,0.142,0.111};
-    private Map<String,Double> hmap_valutazioni = new HashMap<String, Double>() {
-        {
-           put("Altissima",9.00);
-           put("Alta", 7.00);
-           put("Media Alta", 5.00);
-           put("Discretamente Alta", 3.00);
-           put("Nella Media", 1.00);
-           put("Discretamente Bassa", 0.333);
-           put("Media Bassa", 0.2);
-           put("Bassa", 0.142);
-           put("Bassissima",0.111);
-        }
-    };
+
     
   protected static boolean done_prestazioni = false;
   protected static  boolean done_comfort = false;
@@ -70,6 +59,41 @@ public class mainFrame2 extends javax.swing.JFrame {
       done_estetica = false;
       done_peso = false;
       done_prezzo = false;
+  }
+  
+  public void setDiagonalMatrix()
+  {
+        mainFrame2.mat.set(0,0,1);
+        mainFrame2.mat.set(1,1,1);
+        mainFrame2.mat.set(2,2,1);
+        mainFrame2.mat.set(3,3,1);
+        mainFrame2.mat.set(4,4,1);        
+        mat.print(5,5);
+  }
+  
+  public double[] getAutovalori(EigenvalueDecomposition eigen){
+      
+      double [] realPart = eigen.getRealEigenvalues();
+      for(int i=0 ; i<realPart.length;i++)
+                System.out.println("Eigen Value " + i + " is " +
+                                    "[" + realPart[i] +"]");
+      
+      return realPart;
+  }
+  
+  public double getCR (double lambda_max)
+  {
+      double CI = (lambda_max - 5)/4;
+      double CR = (CI * 1.11);
+      return CR;
+  }
+  
+  public double[] getAutovettoriPesati(EigenvalueDecomposition eigen)
+  {
+      Matrix V=eigen.getV(); 
+      V.print(5, 5);
+      double[] autovector = normalizeMatrix(V);
+      return autovector;
   }
   
   public double[] normalizeMatrix(Matrix V)
@@ -164,6 +188,8 @@ public class mainFrame2 extends javax.swing.JFrame {
         jLabel6.setVisible(false);
         jLabel8.setVisible(false);
         jLabel10.setVisible(false);
+        
+        setIconImage(new ImageIcon(getClass().getResource("utils/logo.png")).getImage());
 
     }
     
@@ -232,9 +258,21 @@ public class mainFrame2 extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Find your PC");
         setPreferredSize(new java.awt.Dimension(800, 700));
         setResizable(false);
 
@@ -553,7 +591,7 @@ public class mainFrame2 extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 212, Short.MAX_VALUE))
                 .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -903,12 +941,80 @@ public class mainFrame2 extends javax.swing.JFrame {
         jMenuBar1.setBackground(java.awt.Color.black);
 
         jMenu1.setForeground(new java.awt.Color(255, 255, 255));
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        jMenu1.setText("Menu");
 
-        jMenu2.setForeground(new java.awt.Color(255, 255, 255));
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuItem1.setText("Preset su Prestazioni e Comfort");
+        jMenuItem1.setToolTipText("Genererà delle preferenze improntate principalmente sulla prestazione tecnica e sul comfort.");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Preset su Prestazioni e Prezzo");
+        jMenuItem2.setToolTipText("Genererà delle preferenze improntate principalmente sulla prestazione tecnica e sul prezzo.");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Preset su Peso e Prestazioni");
+        jMenuItem3.setToolTipText("Genererà delle preferenze improntate principalmente sulla prestazione tecnica e sul peso.");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+        jMenu1.add(jSeparator1);
+
+        jMenu2.setText("Authors");
+
+        jMenuItem5.setText("Alessio Spina");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem4.setText("Maurizio Minieri");
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem6.setText("Fortunato Polverino");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setText("Alessandro Polese");
+        jMenu2.add(jMenuItem7);
+
+        jMenuItem8.setText("Domenico Maione");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem8);
+
+        jMenu1.add(jMenu2);
+        jMenu1.add(jSeparator2);
+
+        jMenuItem9.setText("Source Code");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem9);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -916,14 +1022,14 @@ public class mainFrame2 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -935,47 +1041,37 @@ public class mainFrame2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        mainFrame2.mat.set(0,0,1);
-        mainFrame2.mat.set(1,1,1);
-        mainFrame2.mat.set(2,2,1);
-        mainFrame2.mat.set(3,3,1);
-        mainFrame2.mat.set(4,4,1);        
-        mat.print(5,5);
         
-       EigenvalueDecomposition eigen = mat.eig();
-       double [] realPart = eigen.getRealEigenvalues();
-       
-       for(int i=0 ; i<realPart.length;i++)
-           System.out.println("Eigen Value " + i + " is " +
-			       "[" + realPart[i] +"]");
-       
-      
-       
-       double CI = (realPart[0] - 5)/4;
-       double CR = (CI * 1.11);
-       
-       System.out.println("CR: " + CR);
-      if(CR <= 0.10)
-      {
-      Matrix V=eigen.getV(); 
-      V.print(5, 5);
-      double [] autovector = normalizeMatrix(V);
-       
-      for(int i = 0 ; i<5 ; i++)
-           System.out.print(autovector[i] + " ");
-      
-      int settore=cerca_settore(autovector);
-      System.out.println("Settore uscito :" + settore);
-      setPC(settore);
-      jPanel8.setVisible(false);
-      jPanel9.setVisible(true);
-      }
-      else
-      {
-      JOptionPane.showMessageDialog(this,"Dati inconsistenti, ripete i confronti","Messaggio D'errore", JOptionPane.ERROR_MESSAGE);
-      resetFrame();
-      }
+       setDiagonalMatrix();
+       if(!done_prestazioni || !done_estetica || !done_comfort || !done_prezzo || !done_peso)
+           JOptionPane.showMessageDialog(this,"Non tutti i questionari sono completi","Messaggio D'errore", JOptionPane.ERROR_MESSAGE);
+       else
+       {
+           
+            EigenvalueDecomposition eigen = mat.eig();
+            double[] realPart = getAutovalori(eigen); //autovalori
+            double CR = getCR(realPart[0]); // passo lambdamax e calcolo il CR
+            System.out.println("CR: " + CR);         
+            double[] autovettore=getAutovettoriPesati(eigen);
+
+             for(int i = 0 ; i<5 ; i++)
+                     System.out.print(autovettore[i] + " ");
+            
+                if(CR <= 0.10 && CR >= 0)
+                {
+
+                int settore=cerca_settore(autovettore);
+                System.out.println("Settore uscito :" + settore);
+                setPC(settore);
+                jPanel8.setVisible(false);
+                jPanel9.setVisible(true);
+                }
+                else
+                {
+                JOptionPane.showMessageDialog(this,"Dati inconsistenti, ripete i confronti","Messaggio D'errore", JOptionPane.ERROR_MESSAGE);
+                resetFrame();
+                }
+       }
        
       
        
@@ -985,6 +1081,7 @@ public class mainFrame2 extends javax.swing.JFrame {
         // TODO add your handling code here:
         jPanel9.setVisible(false);
         jPanel8.setVisible(true);
+        resetFrame();
     }//GEN-LAST:event_jPanel17MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -1011,8 +1108,7 @@ public class mainFrame2 extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         confrontFrame cf = new confrontFrame();
-        cf.setPanelDisplayed(1);
-       
+        cf.setPanelDisplayed(1);     
         cf.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -1021,6 +1117,143 @@ public class mainFrame2 extends javax.swing.JFrame {
         cf.setPanelDisplayed(4);  
         cf.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        //PRESET PRESTAZIONE - COMFORT
+        mat.set(0,1,0.5);
+        mat.set(0,2,0.125);
+        mat.set(0,3,1);
+        mat.set(0,4,0.142857);
+        mat.set(1,0,2);
+        mat.set(1,2,0.11);
+        mat.set(1,3,2);
+        mat.set(1,4,0.33);
+        mat.set(2,0,8);
+        mat.set(2,1,9);
+        mat.set(2,3,9);
+        mat.set(2,4,3);
+        mat.set(3,0,1);
+        mat.set(3,1,0.5);
+        mat.set(3,2,0.11);
+        mat.set(3,4,0.25);
+        mat.set(4,0,7);
+        mat.set(4,1,3);
+        mat.set(4,2,0.33);
+        mat.set(4,3,4);
+        
+        mainFrame2.jLabel2.setVisible(true);
+        mainFrame2.jLabel4.setVisible(true);
+        mainFrame2.jLabel6.setVisible(true);
+        mainFrame2.jLabel8.setVisible(true);
+        mainFrame2.jLabel10.setVisible(true);
+        
+        mainFrame2.done_peso=true;
+        mainFrame2.done_prezzo=true;
+        mainFrame2.done_prestazioni=true;
+        mainFrame2.done_estetica=true;
+        mainFrame2.done_comfort=true;
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        //PRESET PRESTAZIONE - PREZZO
+        mat.set(0,1,0.11);
+        mat.set(0,2,0.11);
+        mat.set(0,3,1);
+        mat.set(0,4,1);
+        mat.set(1,0,9);
+        mat.set(1,2,0.33);
+        mat.set(1,3,8);
+        mat.set(1,4,6);
+        mat.set(2,0,9);
+        mat.set(2,1,3);
+        mat.set(2,3,9);
+        mat.set(2,4,8);
+        mat.set(3,0,1);
+        mat.set(3,1,0.125);
+        mat.set(3,2,0.11);
+        mat.set(3,4,2);
+        mat.set(4,0,1);
+        mat.set(4,1,0.166);
+        mat.set(4,2,0.125);
+        mat.set(4,3,0.5);
+        
+        mainFrame2.jLabel2.setVisible(true);
+        mainFrame2.jLabel4.setVisible(true);
+        mainFrame2.jLabel6.setVisible(true);
+        mainFrame2.jLabel8.setVisible(true);
+        mainFrame2.jLabel10.setVisible(true);
+        
+        mainFrame2.done_peso=true;
+        mainFrame2.done_prezzo=true;
+        mainFrame2.done_prestazioni=true;
+        mainFrame2.done_estetica=true;
+        mainFrame2.done_comfort=true;
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        //PRESET PRESTAZIONE - PESO
+        mat.set(0,1,4);
+        mat.set(0,2,0.25);
+        mat.set(0,3,7);
+        mat.set(0,4,6);
+        mat.set(1,0,0.25);
+        mat.set(1,2,0.11);
+        mat.set(1,3,2);
+        mat.set(1,4,2);
+        mat.set(2,0,4);
+        mat.set(2,1,9);
+        mat.set(2,3,9);
+        mat.set(2,4,9);
+        mat.set(3,0,0.142);
+        mat.set(3,1,0.5);
+        mat.set(3,2,0.11);
+        mat.set(3,4,2);
+        mat.set(4,0,0.166);
+        mat.set(4,1,0.5);
+        mat.set(4,2,0.11);
+        mat.set(4,3,0.5);
+        
+        mainFrame2.jLabel2.setVisible(true);
+        mainFrame2.jLabel4.setVisible(true);
+        mainFrame2.jLabel6.setVisible(true);
+        mainFrame2.jLabel8.setVisible(true);
+        mainFrame2.jLabel10.setVisible(true);
+        
+        mainFrame2.done_peso=true;
+        mainFrame2.done_prezzo=true;
+        mainFrame2.done_prestazioni=true;
+        mainFrame2.done_estetica=true;
+        mainFrame2.done_comfort=true;
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        String fileName="https://github.com/noname930/Programma-Economia";
+        try {       
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().browse(new URI(fileName));
+}
+        
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1097,6 +1330,15 @@ public class mainFrame2 extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1114,6 +1356,8 @@ public class mainFrame2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

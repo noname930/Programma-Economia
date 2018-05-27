@@ -35,8 +35,8 @@ public class DemoEconomia {
     public static void main(String[] args) {
         // TODO code application logic here
        
-        mainFrame m=new mainFrame();
-        m.setVisible(true);   
+    //    mainFrame m=new mainFrame();
+     //   m.setVisible(true);   
         
         mainFrame2 m2=new mainFrame2();
         m2.setVisible(true);  
