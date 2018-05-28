@@ -20,7 +20,7 @@ package demoeconomia;
 public class DemoEconomia {
     
    protected static String settore1 = "Computer molto prestanti e che abbiano un ottimo comfort";
-   protected static String settore2 = "Computer con prestanti medio alte al prezzo giusto";
+   protected static String settore2 = "Computer con prestazioni medio alte al prezzo giusto";
    protected static String settore3 = "Computer con prestazioni medie e che abbiano il giusto peso";
    protected static String settore4 = "Computer molto prestanti e con una bella estetica";
    protected static String settore5 = "Computer a basso costo e abbastanza prestanti";
