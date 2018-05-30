@@ -9,6 +9,7 @@ import java.util.HashMap;
 import Jama.*;
 import java.awt.Desktop;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -45,6 +46,8 @@ public class mainFrame2 extends javax.swing.JFrame {
   protected static  boolean done_estetica = false;
   protected static  boolean done_peso = false;
   protected static  boolean done_prezzo = false;
+  
+
     
   
   public void resetFrame()
@@ -61,14 +64,23 @@ public class mainFrame2 extends javax.swing.JFrame {
       done_prezzo = false;
   }
   
-  public void setDiagonalMatrix()
+ 
+  public void setMatrix()
   {
+      /*
         mainFrame2.mat.set(0,0,1);
         mainFrame2.mat.set(1,1,1);
         mainFrame2.mat.set(2,2,1);
         mainFrame2.mat.set(3,3,1);
         mainFrame2.mat.set(4,4,1);        
         mat.print(5,5);
+      */
+      
+      for (int i=0 ; i<5 ;i++)
+          for(int j=0; j<5; j++)
+              mat.set(i,j,1);
+      
+      mat.print(5,5);
   }
   
   public double[] getAutovalori(EigenvalueDecomposition eigen){
@@ -175,6 +187,11 @@ public class mainFrame2 extends javax.swing.JFrame {
             jLabel21.setText(DemoEconomia.pc_settore5[4]);
         }
     }
+    
+     public void build_preference()
+     {
+         
+     }
     /**
      * Creates new form mainFrame2
      */
@@ -190,6 +207,8 @@ public class mainFrame2 extends javax.swing.JFrame {
         jLabel10.setVisible(false);
         
         setIconImage(new ImageIcon(getClass().getResource("utils/logo.png")).getImage());
+        
+        setMatrix();
 
     }
     
@@ -1042,12 +1061,12 @@ public class mainFrame2 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-       setDiagonalMatrix();
+      // setMatrix();
        if(!done_prestazioni || !done_estetica || !done_comfort || !done_prezzo || !done_peso)
            JOptionPane.showMessageDialog(this,"Non tutti i questionari sono completi","Messaggio D'errore", JOptionPane.ERROR_MESSAGE);
        else
        {
-           
+            mat.print(5,5);
             EigenvalueDecomposition eigen = mat.eig();
             double[] realPart = getAutovalori(eigen); //autovalori
             double CR = getCR(realPart[0]); // passo lambdamax e calcolo il CR
@@ -1087,7 +1106,9 @@ public class mainFrame2 extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         confrontFrame cf = new confrontFrame();
-        cf.setPanelDisplayed(2);     
+        cf.setPanelDisplayed(2); 
+       
+        
         cf.setVisible(true);
        
        // if(done_prestazioni)

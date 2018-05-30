@@ -10,7 +10,10 @@ import java.util.Map;
 import javax.swing.ButtonGroup;
 import Jama.*;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JSlider;
 
 /**
  *
@@ -23,7 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class confrontFrame extends javax.swing.JFrame {
     
-    //mi servirà per capire quale confronto ho aperto.
+    //mi servirà per capire quale confrontFrame ho aperto.
     private int indicatore;
     /**
      * Creates new form confrontFrame
@@ -46,6 +49,105 @@ public class confrontFrame extends javax.swing.JFrame {
         }
     };
        
+    private Map<Double,String> hmap_reverse = new HashMap<Double,String>();
+    
+    public Map<Double,String> reverseHashMap(Map<String,Double> hmap)
+    {
+        Map<Double,String> hmap_reverse = new HashMap<Double,String>();
+        
+        for(Map.Entry<String, Double> entry : hmap_valutazioni.entrySet()){
+            hmap_reverse.put(entry.getValue(), entry.getKey());
+        }
+        
+        return hmap_reverse;
+    }
+    
+    public void setLabelText_and_Slider_and_jRadioButton(double value,JLabel label,JSlider slider,JRadioButton button)
+    {
+        button.setSelected(true);
+        
+        if (value == 1.0)
+        {
+            label.setText("Nella Media");
+            slider.setValue(50);
+        } 
+        else if (value == 2.0) {
+            label.setText("Bassissimo");
+            slider.setValue(10);
+        } 
+        else if (value == 3.0) {
+            label.setText("Basso");
+            slider.setValue(20);
+        }
+        else if (value == 4.0) {
+            label.setText("Medio Basso");
+            slider.setValue(30);
+        }
+        else if (value == 5.0) {
+        label.setText("Discretamente Basso");
+        slider.setValue(40);
+        }
+        else if (value == 6.0) {
+        label.setText("Discretamente Alto");
+        slider.setValue(60);
+        }
+        else if (value == 7.0) {
+        label.setText("Medio Alto");
+        slider.setValue(70);
+        }
+        else if (value == 8.0) {
+        label.setText("Alto");
+        slider.setValue(80);
+        }
+        else if (value == 9.0) {
+        label.setText("Altissimo");
+        slider.setValue(90);
+        }
+    }
+    
+    public void find_value_and_SetComponents(int i , int j,JLabel label,JSlider slider,JRadioButton button1,JRadioButton button2)
+    {
+        double value1 = mainFrame2.mat.get(i,j);
+        double value2 = mainFrame2.mat.get(j,i);
+        
+        if(value1<1)          
+           setLabelText_and_Slider_and_jRadioButton(value2,label,slider,button2);    
+        else               
+           setLabelText_and_Slider_and_jRadioButton(value1,label,slider,button1);
+                      
+        
+    }
+       
+    public void build_preference(int n)
+    {
+        double value1,value2,value3,value4;
+        String text1,text2;
+        
+        
+        if(n == 1) 
+            find_value_and_SetComponents(3,4,jLabel11,jSlider2,jRadioButton3,jRadioButton4);
+                  
+     
+        else if(n == 2)
+        {
+            find_value_and_SetComponents(2,3,jLabel11,jSlider2,jRadioButton3,jRadioButton4);
+            find_value_and_SetComponents(2,4,jLabel14,jSlider6,jRadioButton11,jRadioButton12);
+        }
+        else if(n==3)
+        {
+            find_value_and_SetComponents(1,2,jLabel11,jSlider2,jRadioButton3,jRadioButton4);
+            find_value_and_SetComponents(1,3,jLabel14,jSlider6,jRadioButton11,jRadioButton12);
+            find_value_and_SetComponents(1,4,jLabel17,jSlider7,jRadioButton13,jRadioButton14);        
+        }
+        else if(n==4)
+        {
+            find_value_and_SetComponents(0,1,jLabel11,jSlider2,jRadioButton3,jRadioButton4);
+            find_value_and_SetComponents(0,2,jLabel14,jSlider6,jRadioButton11,jRadioButton12);
+            find_value_and_SetComponents(0,3,jLabel17,jSlider7,jRadioButton13,jRadioButton14); 
+            find_value_and_SetComponents(0,4,jLabel20,jSlider8,jRadioButton15,jRadioButton16); 
+        }
+    }
+       
        
     public confrontFrame() {
         initComponents();
@@ -67,6 +169,8 @@ public class confrontFrame extends javax.swing.JFrame {
         ButtonGroup g4 = new ButtonGroup();
         g4.add(jRadioButton15);
         g4.add(jRadioButton16);
+        
+        hmap_reverse=reverseHashMap(hmap_valutazioni);
         
         
     }
@@ -114,6 +218,9 @@ public class confrontFrame extends javax.swing.JFrame {
             jRadioButton4.setText("Comfort");
             jButton1.setLocation(315,250);
             this.setSize(634, 220);
+            
+            if(mainFrame2.done_estetica)
+            build_preference(1);
         }
         else if(n==2)
         {
@@ -127,6 +234,9 @@ public class confrontFrame extends javax.swing.JFrame {
             jRadioButton12.setText("Comfort");
             jButton1.setLocation(315,250);
             this.setSize(700, 300);
+            
+            if(mainFrame2.done_prestazioni)
+            build_preference(2);
         }
         else if(n==3)
         {
@@ -140,7 +250,10 @@ public class confrontFrame extends javax.swing.JFrame {
             jRadioButton13.setText("Prezzo");
             jRadioButton14.setText("Comfort");
             jButton1.setLocation(315,250);
-            this.setSize(700, 380);           
+            this.setSize(700, 380);     
+            
+            if(mainFrame2.done_prezzo)
+            build_preference(3);
         }
         else
         {
@@ -155,6 +268,9 @@ public class confrontFrame extends javax.swing.JFrame {
             jRadioButton16.setText("Comfort");
             jButton1.setLocation(315,250);
             this.setSize(720, 450); 
+            
+            if(mainFrame2.done_peso)
+            build_preference(4);
             
         }
             
@@ -250,6 +366,11 @@ public class confrontFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(java.awt.Color.darkGray);
         setType(java.awt.Window.Type.POPUP);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setPreferredSize(new java.awt.Dimension(714, 337));
 
@@ -795,6 +916,13 @@ public class confrontFrame extends javax.swing.JFrame {
    
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        //if(indicatore == 1 && !mainFrame2.done_estetica)
+       // JOptionPane.showMessageDialog(this,"I tuoi dati non sono stati salvati, clicca sul tasto 'Fatto' per completare l'operazione.","Avviso",JOptionPane.ERROR_MESSAGE);
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
